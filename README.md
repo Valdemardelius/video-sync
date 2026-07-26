@@ -33,18 +33,31 @@
 ```
 video-sync-app/
 ├── video-sync-app/          # Frontend (React + TS)
+
 │   └── src/
+
 │       ├── components/      # VideoPlayer, Layout, ThemeToggle...
+
 │       ├── hooks/           # useRoom, useRoomSocket, useVideoSync, useTheme...
+
 │       └── utils/           # Вспомогательные функции
+
 ├── video-sync-backend/      # Backend (FastAPI)
+
 │   ├── main.py               # Точка входа, подключение роутеров
+
 │   ├── models.py             # Pydantic-модели
+
 │   ├── state.py               # Хранилища в памяти + broadcast-логика
+
 │   ├── rooms_router.py        # REST: создание/получение комнат
+
 │   └── websocket_router.py    # WebSocket: синхронизация, чат, роли
+
 └── video-sync-bot/          # Telegram-бот (aiogram)
+
     └── bot.py
+
 ```
 
 ## 🚀 Быстрый старт
