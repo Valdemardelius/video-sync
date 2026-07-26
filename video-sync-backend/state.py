@@ -1,14 +1,10 @@
 from fastapi import WebSocket
 
-# Данные о самих комнатах: room_id -> {"video_url": "..."}
+# room_id -> {"video_url": str, "host_token": str, "admin_token": str}
 rooms: dict[str, dict] = {}
 
-# Кто сейчас подключён к комнате:
-# room_id -> { username: {"ws": WebSocket, "can_control": bool, "is_host": bool} }
+# room_id -> { username: {"ws": WebSocket, "is_host": bool, "is_admin": bool, "can_control": bool} }
 room_participants: dict[str, dict[str, dict]] = {}
-
-# Хост комнаты назначается один раз навсегда: room_id -> username
-room_hosts: dict[str, str] = {}
 
 
 async def broadcast(room_id: str, data: dict, exclude_user: str | None = None):
@@ -25,6 +21,11 @@ async def broadcast(room_id: str, data: dict, exclude_user: str | None = None):
 def participants_list(room_id: str):
     participants = room_participants.get(room_id, {})
     return [
-        {"user": username, "can_control": info["can_control"], "is_host": info["is_host"]}
+        {
+            "user": username,
+            "is_host": info["is_host"],
+            "is_admin": info["is_admin"],
+            "can_control": info["can_control"],
+        }
         for username, info in participants.items()
     ]
